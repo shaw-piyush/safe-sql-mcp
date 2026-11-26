@@ -1,0 +1,46 @@
+[project]
+name = "safe-sql-mcp"
+version = "0.1.0"
+description = "Read-only Postgres MCP server with a two-layer safety guarantee, plus a text-to-SQL agent measured on a hand-written golden set."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "anthropic>=2.9.0",
+    "mcp==2.3.0",
+    "psycopg[binary]>=3.3.9,<4",
+    "pydantic>=2.14.3",
+    "pyyaml>=6.0.3",
+    "sqlglot==30.32.0",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.7.0",
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # import sorting
+    "B",  # bugbear
+    "UP", # pyupgrade
+    "S",  # bandit, mostly for S608 (SQL built from strings)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# tests use bare asserts and build hostile SQL on purpose
+"**/tests/**" = ["S101", "S608"]
+
+[tool.pytest.ini_options]
+testpaths = ["server"]
+pythonpath = ["."]
+addopts = ["-ra", "--strict-markers"]

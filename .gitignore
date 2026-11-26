@@ -1,0 +1,34 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# Olist CSVs, downloaded from Kaggle
+db/data/
+
+# logs, audit logs and agent traces
+*.log
+logs/
+traces/
+**/traces/
+
+# agent response cache (dev only)
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/
